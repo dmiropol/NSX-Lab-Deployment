@@ -2,7 +2,7 @@
 .terraform/
 
 # Project files
-.code-workspace/
+*.code-workspace
 
 #other files
 .DS_Store
