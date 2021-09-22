@@ -1,0 +1,34 @@
+export GOVC_URL=vcsa-01b.corp.local
+export GOVC_USERNAME=administrator@corp.local
+export GOVC_PASSWORD=VMware1!
+export GOVC_INSECURE=1
+export GOVC_DATACENTER=Datacenter-1B
+
+# list all DCs
+govc ls 
+dc=$(govc ls /)
+
+# list VDSes in a DC #./network/LabVDS
+govc find -type DistributedVirtualSwitch
+
+
+# create dvportgroup. vlan trunking need to be adjusted separately/manually
+govc dvs.portgroup.add -dvs LabVDS -type earlyBinding -nports 8 -vlan 0 LabNet
+govc dvs.portgroup.add -dvs LabVDS -type earlyBinding -nports 8 -vlan 0 edge-uplink1
+govc dvs.portgroup.add -dvs LabVDS -type earlyBinding -nports 8 -vlan 0 edge-uplink2
+
+#find portgroup-id
+govc dvs.portgroup.info -pg LabNet LabVDS
+govc dvs.portgroup.info -pg edge-uplink1 LabVDS
+govc dvs.portgroup.info -pg edge-uplink2 LabVDS
+
+# get datastore-id
+govc ls -l -i /Datacenter-1B/datastore/ds-nfs
+
+# use the extracted IDs for add_trasnport_node.json, transport_node_profiles.json
+# some IDs can be visibile in vC URL:
+https://vcenter-xxx....
+/ui/app/datastore;nav=s/urn:vmomi:Datastore:datastore-xxxxx
+/ui/app/dvs;nav=n/urn:vmomi:VmwareDistributedVirtualSwitch:dvs-xxx
+/ui/app/host;nav=h/urn:vmomi:HostSystem:host-xxxxxx
+
