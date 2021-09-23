@@ -130,34 +130,21 @@ variable "nsxt_group_rdsh" {
   }
 }
 
-variable "nsxt_group_fin_web" {
+variable "nsxt_group_finance" {
   type = map
   default = {
-    display_name = "Fin-Web"
+    fin_servers = "Fin-Web"
     vm_name = "srv-FinData"
+    fin_users = "Fin-Users"
   }
 }
 
-variable "nsxt_group_hr_web" {
+variable "nsxt_group_hr" {
   type = map
   default = {
-    display_name = "HR-Web"
+    hr_servers = "HR-Web"
     vm_name = "phoenix-web-02"
-  }
-}
-
-
-variable "nsxt_group_fin_users" {
-  type = map
-  default = {
-    display_name = "Fin-Users"
-  }
-}
-
-variable "nsxt_group_hr_users" {
-  type = map
-  default = {
-    display_name = "HR-Users"
+    hr_users = "HR-Users"
   }
 }
 

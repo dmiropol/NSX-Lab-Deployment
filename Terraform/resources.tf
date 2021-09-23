@@ -285,31 +285,19 @@ resource "nsxt_policy_group" "rdsh_group" {
 
 
 resource "nsxt_policy_group" "fin_web_group" {
-  display_name = var.nsxt_group_fin_web.display_name
+  display_name = var.nsxt_group_finance.fin_servers
   criteria {
     condition {
       member_type = "VirtualMachine"
       operator    = "CONTAINS"
       key         = "Name"
-      value       = var.nsxt_group_fin_web.vm_name
-    }
-  }
-}
-
-resource "nsxt_policy_group" "hr_web_group" {
-  display_name = var.nsxt_group_hr_web.display_name
-  criteria {
-    condition {
-      member_type = "VirtualMachine"
-      operator    = "CONTAINS"
-      key         = "Name"
-      value       = var.nsxt_group_hr_web.vm_name
+      value       = var.nsxt_group_finance.vm_name
     }
   }
 }
 
 resource "nsxt_policy_group" "fin_users_group" {
-  display_name = var.nsxt_group_fin_users.display_name
+  display_name = var.nsxt_group_finance.fin_users
   extended_criteria {
     identity_group {
       distinguished_name             = "CN=FIN,CN=Users,DC=corp,DC=local"
@@ -317,9 +305,20 @@ resource "nsxt_policy_group" "fin_users_group" {
     }
   }
 }
+resource "nsxt_policy_group" "hr_web_group" {
+  display_name = var.nsxt_group_hr.hr_servers
+  criteria {
+    condition {
+      member_type = "VirtualMachine"
+      operator    = "CONTAINS"
+      key         = "Name"
+      value       = var.nsxt_group_hr.vm_name
+    }
+  }
+}
 
 resource "nsxt_policy_group" "hr_users_group" {
-  display_name = var.nsxt_group_hr_users.display_name
+  display_name = var.nsxt_group_hr.hr_users
   extended_criteria {
     identity_group {
       distinguished_name             = "CN=HR,CN=Users,DC=corp,DC=local"
